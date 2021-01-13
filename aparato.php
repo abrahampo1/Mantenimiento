@@ -152,17 +152,7 @@ if(isset($_GET['sendping']))
                                 </div>
                             </div>
                         </div>
-                        <!-- Pending error tickets calculator -->
-
-                        <?
-                        $sql = "SELECT * FROM ticket WHERE aparato=$aparato";
-                        $do = buscarbdo($sql);
-                        $tickets = 0;
-                        while($row = mysqli_fetch_assoc($do))
-                        {
-                            $tickets++;
-                        }
-                        ?>
+                        
 
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
@@ -228,7 +218,24 @@ if(isset($_GET['sendping']))
                         <!-- Pie Chart -->
                         
                     </div>
-<h2>Tickets de mantenimiento</h2>
+                    <!-- Pending error tickets calculator -->
+                    <h2>Tickets de mantenimiento</h2>
+                    <?
+                    $sql = "SELECT * FROM ticket WHERE aparato=$aparato";
+                    $do = buscarbdo($sql);
+                    $tickets = 0;
+                    while($row = mysqli_fetch_assoc($do))
+                    {
+                        $tickets++;
+                    }
+                    if($tickets == 0)
+                        {
+                            echo ('<div style="text-align:center">
+                            <h4 style="text-align:center">Todo está en orden.</h4>
+                            </div>');
+                        }
+                    ?>
+
                     <!-- Content Row -->
                     <div class="row">
 
@@ -239,15 +246,23 @@ if(isset($_GET['sendping']))
 
                             <!-- Color System -->
                             <div class="row">
-                                
-                                <div class="col-lg-4 mb-4">
-                                    <div class="card bg-danger text-white shadow">
-                                        <div class="card-body">
-                                            Danger
-                                            <div class="text-white-50 small">#e74a3b</div>
-                                        </div>
-                                    </div>
+                            <?
+                        $sql = "SELECT * FROM ticket WHERE aparato=$aparato";
+                        $do = buscarbdo($sql);
+                        while($row = mysqli_fetch_assoc($do))
+                        {
+                            echo('<div class="col-lg-4 mb-4">
+                            <div class="card bg-danger text-white shadow">
+                                <div class="card-body">
+                                    '.$row['tipo_error'].'
+                                    <div class="text-white-50 small">'.$row['descripcion'].'</div>
                                 </div>
+                            </div>
+                        </div>');
+                        }
+                        
+                        ?>
+                                
                                 
                             </div>
 
