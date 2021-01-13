@@ -251,13 +251,13 @@ if(isset($_GET['sendping']))
                         $do = buscarbdo($sql);
                         while($row = mysqli_fetch_assoc($do))
                         {
-                            echo('<div class="col-lg-4 mb-4">
+                            echo('<a style="text-decoration:none;" href="ticket.php?t='.$row['id'].'"><div class="col-lg-4 mb-4">
                             <div class="card bg-danger text-white shadow">
                                 <div class="card-body">
                                     '.$row['tipo_error'].'
                                     <div class="text-white-50 small">'.$row['descripcion'].'</div>
                                 </div>
-                            </div>
+                            </div></a>
                         </div>');
                         }
                         
