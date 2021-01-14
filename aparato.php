@@ -1,3 +1,4 @@
+
 <?php
 include('database.php');
 if(!isset($_GET['a']))
@@ -47,6 +48,7 @@ if(isset($_GET['sendping']))
     print($estado);
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -279,7 +281,7 @@ if(isset($_GET['sendping']))
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; CPSoftware 202</span>
+                        <span>Copyright &copy; CPSoftware 2021</span>
                     </div>
                 </div>
             </footer>
@@ -290,7 +292,6 @@ if(isset($_GET['sendping']))
 
     </div>
     <!-- End of Page Wrapper -->
-
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -308,6 +309,7 @@ if(isset($_GET['sendping']))
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    
 
 </body>
 
