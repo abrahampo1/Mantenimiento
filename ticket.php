@@ -59,7 +59,7 @@ $info_tecnico = mysqli_fetch_assoc($do);
                                         <img class="img-fluid px-1 px-sm-4 mt-2 mb-4" style="width: 10rem;"
                                             src="img/mantenimiento.svg" alt="">
                                     </div>
-                                    <p style="text-align: center;">El Profesor@ <?echo $info_ticket['usuario']?>, ha descrito que <?echo $info_ticket['descripcion']?><br><br>Informacion del equipo:<br>Ubicacion: <?echo $info_aparato['ubicacion']?><br>CPU: <?echo $info_aparato['cpu']?><br>RAM: <?echo $info_aparato['ram']?><br>DISCO DURO: <?echo $info_aparato['disco']?></p>
+                                    <p style="text-align: center;">El Profesor@ <?echo $info_ticket['usuario']?>, ha descrito que <?echo $info_ticket['descripcion']?><br><br>Información del equipo:<br>Ubicacion: <?echo $info_aparato['ubicacion']?><br>Identificador: <?echo $info_aparato['nombre']?><br>IP: <?echo $info_aparato['ip']?><br>CPU: <?echo $info_aparato['cpu']?><br>RAM: <?echo $info_aparato['ram']?><br>DISCO DURO: <?echo $info_aparato['disco']?></p>
                                 </div>
                             </div>
                         </div>
