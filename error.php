@@ -3,7 +3,8 @@ $errores=array(
     'El código de el aparato introducido no es válido 😅',
     'No se ha podido actualizar la base de datos.',
     'El codigo del ticket no es valido, pidele a un administrador que lo revise o intentalo de nuevo mas tarde.',
-    'Las contraseñas no coinciden.'
+    'Las contraseñas no coinciden.',
+    'Error al conectar con la base de datos'
 );
 if(!isset($_GET['e']))
 {

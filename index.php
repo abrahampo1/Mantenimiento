@@ -1,7 +1,20 @@
 <?
-if(isset($_GET['b']))
+session_start();
+if(!isset($_SESSION["user_id"]))
 {
-    echo('furrula y has buscado: '.$_GET['b']);
+    header("location: login.php");
+}else
+{
+    include("database.php");
+    $user_id = $_SESSION["user_id"];
+    $sql = "SELECT * FROM tecnicos WHERE id = $user_id";
+    if($do = mysqli_query($link, $sql))
+    {
+        $info = mysqli_fetch_assoc($do);
+    }else
+    {
+        header("location: error.php?e=4");
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -53,7 +66,7 @@ if(isset($_GET['b']))
                     <form method="get"
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar aparato..."
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar aparato..." value="<?php if(isset($_GET['b'])){echo $_GET['b'];}?>"
                                 aria-label="Search" name="b" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
@@ -127,7 +140,7 @@ if(isset($_GET['b']))
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario de ejemplo</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><? echo $info["nombre"]?></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -147,9 +160,9 @@ if(isset($_GET['b']))
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="logout.php" >
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Cerrar Sesión
                                 </a>
                             </div>
                         </li>
@@ -170,6 +183,11 @@ if(isset($_GET['b']))
                     <?php
                         include('database.php');
                         $sql = 'SELECT * FROM ordenadores';
+                        if(isset($_GET["b"]))
+                        {
+                            $busc = $_GET['b'];
+                            $sql = "SELECT * FROM ordenadores WHERE nombre LIKE '%$busc%' or id LIKE '$busc' or ip LIKE '%$busc%' or ubicacion LIKE '%$busc%' or tipo LIKE '%$busc%' or cpu LIKE '%$busc%' or ram LIKE '%$busc%' or disco LIKE '%$busc%'";
+                        }
                         $busqueda = mysqli_query($link, $sql);
                         while($fila = mysqli_fetch_assoc($busqueda))
                         {
