@@ -120,7 +120,6 @@ if(isset($_GET['sendping']))
                             </div>
                         </div>
 
-                        <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
@@ -144,11 +143,21 @@ if(isset($_GET['sendping']))
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
+                                        
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">IP
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?echo $info['ip']?></div>
+                                                <?
+                                        if(isset($_GET["edit"]))
+                                        {
+                                            echo'<form method="post" action="aparato.php?a='.$info["id"].'"><input name="ip" type="text" class="form-control form-control-user h5 mb-0 mr-3 font-weight-bold text-gray-800" value="'.$info['ip'].'"><br><button class="btn btn-primary btn-user btn-block" type="submit">Guardar</button></form>';
+                                        }else
+                                        {
+                                            echo '<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">'.$info['ip'].'</div>';
+                                        }
+                                        ?>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -168,7 +177,16 @@ if(isset($_GET['sendping']))
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Ubicación</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?echo $info['ubicacion']?></div>
+                                                <?
+                                        if(isset($_GET["edit"]))
+                                        {
+                                            echo'<form method="post" action="aparato.php?a='.$info["id"].'><input type="text" class="form-control form-control-user h5 mb-0 mr-3 font-weight-bold text-gray-800" value="'.$info['ubicacion'].'"><br><button class="btn btn-primary btn-user btn-block" type="submit">Guardar</button></form>';
+                                        }else
+                                        {
+                                            echo '<div class="h5 mb-0 font-weight-bold text-gray-800">'.$info['ubicacion'].'</div>';
+                                        }
+                                        ?>
+                                            
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-map-marked fa-2x text-gray-300"></i>

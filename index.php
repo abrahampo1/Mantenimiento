@@ -16,6 +16,7 @@ if(!isset($_SESSION["user_id"]))
         header("location: error.php?e=4");
     }
 }
+
 ?>
 <!DOCTYPE html>
 
@@ -108,25 +109,79 @@ if(!isset($_SESSION["user_id"]))
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">1+</span>
-                            </a>
+                                <?
+                                //Sistema de tickets
+
+                                    $sql = "SELECT * FROM ticket WHERE tecnico = $user_id";
+                                    $conteo_tickets = 0;
+                                    if($ticket_bd = mysqli_query($link, $sql))
+                                    {
+
+                                        while($ticket = mysqli_fetch_assoc($ticket_bd)){
+                                            $conteo_tickets++;
+
+                                        }
+                                        if($conteo_tickets == 0)
+                                        {
+                                            echo '
+                                            </a>';
+                                        }else
+                                        {
+                                            echo '<span class="badge badge-danger badge-counter">+'.$conteo_tickets.'</span>
+                                    </a>';
+                                        }
+                                    
+                                    
+                                    }else
+                                    {
+                                        $conteo_tickets = 0;
+                                        echo '
+                                    </a>';
+                                    }
+                                    
+                                ?>
+                                
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Centro de Alertas
                                 </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <?
+                                if($conteo_tickets > 0)
+                                {
+                                    $sql = "SELECT * FROM ticket WHERE tecnico = $user_id";
+                                    $ticket_bd = mysqli_query($link, $sql);
+                                    while($ticket = mysqli_fetch_assoc($ticket_bd))
+                                    {
+                                        $fecha_creacion = date('Y-m-d H:i:s', $ticket["fecha"]);
+                                        echo'<a class="dropdown-item d-flex align-items-center" href="ticket.php?t='.$ticket["id"].'">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-danger">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">'.$fecha_creacion.'</div>
+                                            <span class="font-weight-bold">'.$ticket["tipo_error"].'</span>
+                                        </div>
+                                    </a>';
+                                    }
+                                }else
+                                {
+                                    echo'<a class="dropdown-item d-flex align-items-center">
                                     <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <div class="icon-circle bg-success">
+                                        <i class="fas fa-clipboard-check"></i>
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">hoy</div>
-                                        <span class="font-weight-bold">ejemplo de alerta de mantenimiento</span>
+                                        <span class="font-weight-bold">Todo en orden</span>
                                     </div>
-                                </a>
+                                </a>';  
+                                }
+                                ?>
+                                
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Todas las alertas</a>
                             </div>
                         </li>
