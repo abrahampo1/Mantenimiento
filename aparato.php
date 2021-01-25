@@ -435,6 +435,7 @@ if(isset($_POST["nombre"]))
                             <!-- Color System -->
                             <div class="row">
                             <?
+                            $aparato = $_GET['a'];
                         $sql = "SELECT * FROM ticket WHERE aparato=$aparato";
                         $do = buscarbdo($sql);
                         while($row = mysqli_fetch_assoc($do))
