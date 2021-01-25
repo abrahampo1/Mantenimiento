@@ -68,7 +68,16 @@ $info_tecnico = mysqli_fetch_assoc($do);
                                 <div class="card-body">
                                     <div class="text-center">
                                         <img class="img-fluid px-1 px-sm-4 mt-2 mb-4" style="width: 10rem;"
-                                            src="img/mantenimiento.svg" alt="">
+                                        <?
+                                        if($info_ticket["tipo_error"] = "288" && $info_ticket["descripcion"] == "ilitri paga el programa")
+                                        {
+                                            echo('src="https://assets.change.org/photos/0/cx/am/hBCXaMRcxdBgKdy-800x450-noPad.jpg?1512577144"');
+                                        }else
+                                        {
+                                            echo('src="img/mantenimiento.svg"');
+                                        }
+                                        ?>
+                                             alt="">
                                     </div>
                                     <p style="text-align: center;">El Profesor@ <?echo $info_ticket['usuario']?>, ha descrito que <?echo $info_ticket['descripcion']?><br><br>Información del equipo:<br>Ubicacion: <?echo $info_aparato['ubicacion']?><br>Identificador: <?echo $info_aparato['nombre']?><br>IP: <?echo $info_aparato['ip']?><br>CPU: <?echo $info_aparato['cpu']?><br>RAM: <?echo $info_aparato['ram']?><br>DISCO DURO: <?echo $info_aparato['disco']?></p>
                                 </div>

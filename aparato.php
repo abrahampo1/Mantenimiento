@@ -258,6 +258,12 @@ if(isset($_POST["nombre"]))
                                         <div class="col mr-2">
                                         
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">IP
+                                            <?
+                                            if($info["ip"]=="288.288.288.288")
+                                            {
+                                                echo('<img weight="40px" height="40px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Roto2.svg/1200px-Roto2.svg.png">');
+                                            }
+                                            ?>
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -296,6 +302,10 @@ if(isset($_POST["nombre"]))
                                             echo'<form method="post" action="aparato.php?a='.$info["id"].'"><input name="ubicacion" type="text" class="form-control form-control-user h5 mb-0 mr-3 font-weight-bold text-gray-800" value="'.$info['ubicacion'].'"><br><button class="btn btn-primary btn-user btn-block" type="submit">Guardar</button></form>';
                                         }else
                                         {
+                                            if($info["ubicacion"] == "forocoches")
+                                            {
+                                                echo('<!-- Emosido engañados -->');
+                                            }
                                             echo '<div class="h5 mb-0 font-weight-bold text-gray-800">'.$info['ubicacion'].'</div>';
                                         }
                                         ?>

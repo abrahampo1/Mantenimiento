@@ -4,7 +4,8 @@ $errores=array(
     'No se ha podido actualizar la base de datos.',
     'El codigo del ticket no es valido, pidele a un administrador que lo revise o intentalo de nuevo mas tarde.',
     'Las contraseñas no coinciden.',
-    'Error al conectar con la base de datos'
+    'Error al conectar con la base de datos',
+    'No perteneces a forocoches premium :roto2:'
 );
 if(!isset($_GET['e']))
 {
