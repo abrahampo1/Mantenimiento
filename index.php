@@ -9,7 +9,7 @@ if(!isset($_SESSION["user_id"]))
     $user_id = $_SESSION["user_id"];
     $sql = "SELECT * FROM tecnicos WHERE id = $user_id";
     if($do = mysqli_query($link, $sql))
-    {
+    { 
         $info = mysqli_fetch_assoc($do);
     }else
     {
