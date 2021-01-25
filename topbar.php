@@ -3,7 +3,6 @@ $user_id = $_SESSION["user_id"];
     $sql = "SELECT * FROM tecnicos WHERE id = $user_id";
     $search = mysqli_query($link, $sql);
     $user_info = mysqli_fetch_assoc($search);
-
 ?>
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -36,14 +35,14 @@ $user_id = $_SESSION["user_id"];
             <!-- Dropdown - Messages -->
             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                 aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search" method="GET" target="_blank" action="">
+                <form class="form-inline mr-auto w-100 navbar-search" method="GET" target="_blank" action="index.php">
                     <div class="input-group">
                         <input type="text" class="form-control bg-light border-0 small"
-                            placeholder="Search for..." aria-label="Search"
+                            placeholder="Buscar aparato..." aria-label="Search" value="<?php if(isset($_GET['b'])){echo $_GET['b'];}?>"
                             aria-describedby="basic-addon2" name="b" id="b">
                         <div class="input-group-append">
-                            <input class="btn btn-primary" type="submit">
-                                <i class="fas fa-search fa-sm"></i>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i></button>
                         </div>
                     </div>
                 </form>
@@ -68,6 +67,7 @@ $user_id = $_SESSION["user_id"];
                             $conteo_tickets++;
 
                         }
+        
                         if($conteo_tickets == 0)
                         {
                             echo '
@@ -101,6 +101,10 @@ $user_id = $_SESSION["user_id"];
                     $ticket_bd = mysqli_query($link, $sql);
                     while($ticket = mysqli_fetch_assoc($ticket_bd))
                     {
+                        $aparato = $ticket["aparato"];
+                            $sql = "SELECT * FROM ordenadores WHERE id = $aparato";
+                            $do = mysqli_query($link, $sql);
+                            $info_aparato = mysqli_fetch_assoc($do);
                         $fecha_creacion = date('Y-m-d H:i:s', $ticket["fecha"]);
                         echo'<a class="dropdown-item d-flex align-items-center" href="ticket.php?t='.$ticket["id"].'">
                         <div class="mr-3">
@@ -110,7 +114,7 @@ $user_id = $_SESSION["user_id"];
                         </div>
                         <div>
                             <div class="small text-gray-500">'.$fecha_creacion.'</div>
-                            <span class="font-weight-bold">'.$ticket["tipo_error"].'</span>
+                            <span class="font-weight-bold">'.$info_aparato["nombre"].' - '.$ticket["tipo_error"].'</span>
                         </div>
                     </a>';
                     }

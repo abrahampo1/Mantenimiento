@@ -1,4 +1,5 @@
 <?
+session_start();
 include('database.php');
 if(!isset($_GET['t'])){
     header('Location: error.php?e=2');
@@ -42,11 +43,21 @@ $info_tecnico = mysqli_fetch_assoc($do);
 <body id="page-top">
     <div id="wrapper">
         <div id="content-wrapper" class="d-flex flex-column">
+
+    <?include("topbar.php");?>
             <br>
             <div id="content">
+                
                 <div class="container-fluid">
+                    <form action="" method="POST">
+                    <button href="#" class="btn btn-success btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        <span class="text">Marcar como arreglado</span>
+                    </button>
+                    </form>
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">A Trabajar, <?echo $info_tecnico['nombre']?></h1>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 mb-4">
@@ -70,16 +81,6 @@ $info_tecnico = mysqli_fetch_assoc($do);
 
             </div>
             <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; CPSoftware 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->

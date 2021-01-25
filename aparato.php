@@ -129,6 +129,18 @@ if(isset($_POST["discoduro"]))
         header("location: error.php?e=4");
     }
 }
+if(isset($_POST["nombre"]))
+{
+    $var_nueva = $_POST["nombre"];
+    $sql = "UPDATE `ordenadores` SET `nombre` = '$var_nueva' WHERE `ordenadores`.`id` = $aparato";
+    if(mysqli_query($link, $sql))
+    {
+        reload($aparato);
+    }else
+    {
+        header("location: error.php?e=4");
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -172,7 +184,16 @@ if(isset($_POST["discoduro"]))
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800"><?echo $info['nombre']?></h1>
+                    <?
+                                        if(isset($_GET["edit"]))
+                                        {
+                                            echo'<div class="row"><form method="post" action="aparato.php?a='.$info["id"].'"><input name="nombre" type="text" class="form-control form-control-user h3 mb-0 text-gray-800" value="'.$info['nombre'].'"><button class="btn btn-primary btn-user btn-block" type="submit">Guardar</button></form></div>';
+                                        }else
+                                        {
+                                            echo '<h1 class="h3 mb-0 text-gray-800">'.$info['nombre'].'</h1>';
+                                        }
+                                        ?>
+                        
                         <div>
                         <a href="?a=<?echo $aparato?>&sendping=1" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                         class="fas fa-paper-plane fa-sm text-white-50"></i> Enviar Ping</a>
