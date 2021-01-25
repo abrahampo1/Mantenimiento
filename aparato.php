@@ -1,6 +1,13 @@
 
 <?php
 include('database.php');
+session_start();
+if(isset($_SESSION["user_id"])){
+    
+}else
+{
+    header('location: login.php');
+}
 if(!isset($_GET['a']))
 {
     header('Location: error.php?e=0');
@@ -17,6 +24,11 @@ function buscarbdo($sql)
     }
     return $result;
 }
+function reload($aparato)
+{
+    header("location: aparato.php?a=$aparato");
+}
+
 $sql = "SELECT * FROM ordenadores WHERE id = $aparato";
 $bdo = buscarbdo($sql);
 $info = mysqli_fetch_assoc($bdo);
@@ -46,6 +58,76 @@ if(isset($_GET['sendping']))
         header('Location: aparato.php?a='.$aparato);
     }
     print($estado);
+}
+
+
+
+
+
+
+
+
+//Actualizar info, tengo que optimizar esta zona, no me llega el conocimiento
+
+if(isset($_POST["ip"]))
+{
+    $ip_nueva = $_POST["ip"];
+    $sql = "UPDATE `ordenadores` SET `ip` = '$ip_nueva' WHERE `ordenadores`.`id` = $aparato";
+    if(mysqli_query($link, $sql))
+    {
+        header("location: aparato.php?a=$aparato&sendping=1");
+    }else
+    {
+        header("location: error.php?e=4");
+    }
+}
+if(isset($_POST["ubicacion"]))
+{
+    $var_nueva = $_POST["ubicacion"];
+    $sql = "UPDATE `ordenadores` SET `ubicacion` = '$var_nueva' WHERE `ordenadores`.`id` = $aparato";
+    if(mysqli_query($link, $sql))
+    {
+        reload($aparato);
+    }else
+    {
+        header("location: error.php?e=4");
+    }
+}
+if(isset($_POST["cpu"]))
+{
+    $var_nueva = $_POST["cpu"];
+    $sql = "UPDATE `ordenadores` SET `cpu` = '$var_nueva' WHERE `ordenadores`.`id` = $aparato";
+    if(mysqli_query($link, $sql))
+    {
+        reload($aparato);
+    }else
+    {
+        header("location: error.php?e=4");
+    }
+}
+if(isset($_POST["ram"]))
+{
+    $var_nueva = $_POST["ram"];
+    $sql = "UPDATE `ordenadores` SET `ram` = '$var_nueva' WHERE `ordenadores`.`id` = $aparato";
+    if(mysqli_query($link, $sql))
+    {
+        reload($aparato);
+    }else
+    {
+        header("location: error.php?e=4");
+    }
+}
+if(isset($_POST["discoduro"]))
+{
+    $var_nueva = $_POST["discoduro"];
+    $sql = "UPDATE `ordenadores` SET `disco` = '$var_nueva' WHERE `ordenadores`.`id` = $aparato";
+    if(mysqli_query($link, $sql))
+    {
+        reload($aparato);
+    }else
+    {
+        header("location: error.php?e=4");
+    }
 }
 ?>
 
@@ -83,6 +165,7 @@ if(isset($_GET['sendping']))
 
             <!-- Main Content -->
             <div id="content">
+            <?include("topbar.php");?>
             <br>
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -93,8 +176,17 @@ if(isset($_GET['sendping']))
                         <div>
                         <a href="?a=<?echo $aparato?>&sendping=1" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                         class="fas fa-paper-plane fa-sm text-white-50"></i> Enviar Ping</a>
-                        <a href="?a=<?echo $aparato?>&edit=1" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
-                        class="fas fa-pen-square fa-sm text-white-50"></i> Editar</a>
+                        <?
+                        if(isset($_GET["edit"]))
+                        {
+                            echo '<a href="?a='.$aparato.'" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+                            class="fas fa-window-close fa-sm text-white-50"></i> Cancelar</a>';
+                        }else
+                        {
+                            echo '<a href="?a='.$aparato.'&edit=1" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm"><i
+                            class="fas fa-pen-square fa-sm text-white-50"></i> Editar</a>';
+                        }
+                        ?>
                         </div>
                         
                     </div>
@@ -180,7 +272,7 @@ if(isset($_GET['sendping']))
                                                 <?
                                         if(isset($_GET["edit"]))
                                         {
-                                            echo'<form method="post" action="aparato.php?a='.$info["id"].'><input name="ubicacion" type="text" class="form-control form-control-user h5 mb-0 mr-3 font-weight-bold text-gray-800" value="'.$info['ubicacion'].'"><br><button class="btn btn-primary btn-user btn-block" type="submit">Guardar</button></form>';
+                                            echo'<form method="post" action="aparato.php?a='.$info["id"].'"><input name="ubicacion" type="text" class="form-control form-control-user h5 mb-0 mr-3 font-weight-bold text-gray-800" value="'.$info['ubicacion'].'"><br><button class="btn btn-primary btn-user btn-block" type="submit">Guardar</button></form>';
                                         }else
                                         {
                                             echo '<div class="h5 mb-0 font-weight-bold text-gray-800">'.$info['ubicacion'].'</div>';
@@ -207,32 +299,72 @@ if(isset($_GET['sendping']))
                         <?
                         if($info['tipo'] == 'ordenador' || $info['tipo'] == 'servidor')
                         {
-                            echo(
-                                '<div class="col-lg-4 mb-3">
-                                <div class="card bg-primary text-white shadow">
-                                    <div class="card-body">
-                                        CPU
-                                        <div class="text-white-50 small">'.$info['cpu'].'</div>
+                            if(isset($_GET["edit"]))
+                            {
+                                echo(
+                                    '<div class="col-lg-4 mb-3">
+                                    <div class="card bg-primary text-white shadow">
+                                        <div class="card-body">
+                                            CPU
+                                            <form method="post" action="aparato.php?a='.$aparato.'">
+                                            <input name="cpu" class="form-control form-control-user text-black-50 small" value="'.$info['cpu'].'"><br>
+                                            <button class="btn btn-primary btn-user btn-block" type="submit">Guardar</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 mb-3">
-                                <div class="card bg-success text-white shadow">
-                                    <div class="card-body">
-                                        RAM
-                                        <div class="text-white-50 small">'.$info['ram'].'</div>
+                                <div class="col-lg-4 mb-3">
+                                    <div class="card bg-success text-white shadow">
+                                        <div class="card-body">
+                                            RAM
+                                            <form method="post" action="aparato.php?a='.$aparato.'">
+                                            <input name="ram" class="form-control form-control-user text-black-50 small" value="'.$info['ram'].'"><br>
+                                            <button class="btn btn-primary btn-user btn-block" type="submit">Guardar</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 mb-4">
-                                <div class="card bg-info text-white shadow">
-                                    <div class="card-body">
-                                        DISCO DURO
-                                        <div class="text-white-50 small">'.$info['disco'].'</div>
+                                <div class="col-lg-4 mb-4">
+                                    <div class="card bg-info text-white shadow">
+                                        <div class="card-body">
+                                            DISCO DURO
+                                            <form method="post" action="aparato.php?a='.$aparato.'">
+                                            <input name="discoduro" class="form-control form-control-user text-black-50 small" value="'.$info['disco'].'"><br>
+                                            <button class="btn btn-primary btn-user btn-block" type="submit">Guardar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>'
+                                );
+                            }else
+                            {
+                                echo(
+                                    '<div class="col-lg-4 mb-3">
+                                    <div class="card bg-primary text-white shadow">
+                                        <div class="card-body">
+                                            CPU
+                                            <div class="text-white-50 small">'.$info['cpu'].'</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>'
-                            );
+                                <div class="col-lg-4 mb-3">
+                                    <div class="card bg-success text-white shadow">
+                                        <div class="card-body">
+                                            RAM
+                                            <div class="text-white-50 small">'.$info['ram'].'</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 mb-4">
+                                    <div class="card bg-info text-white shadow">
+                                        <div class="card-body">
+                                            DISCO DURO
+                                            <div class="text-white-50 small">'.$info['disco'].'</div>
+                                        </div>
+                                    </div>
+                                </div>'
+                                );
+                            }
                         }
                         ?>
                                 
