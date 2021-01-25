@@ -1,11 +1,12 @@
 <?
 session_start();
+include("database.php");
 if(!isset($_SESSION["user_id"]))
 {
     header("location: login.php");
-}else
+}
+else
 {
-    include("database.php");
     $user_id = $_SESSION["user_id"];
     $sql = "SELECT * FROM tecnicos WHERE id = $user_id";
     if($do = mysqli_query($link, $sql))
