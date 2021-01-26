@@ -30,8 +30,19 @@ if(isset($_POST['cerrar']))
             header('location: ok.php?o=1');
         }
     }
-    
-    
+}
+if(isset($_POST['abrir']))
+{
+    $sql = "UPDATE `ticket` SET `estado` = 'pendiente' WHERE `ticket`.`id` = $ticket";
+    if($do = mysqli_query($link, $sql))
+    {
+        $unix_time = time();
+        $sql = "INSERT INTO `actividad` (`id`, `persona`, `accion`, `fecha`) VALUES (NULL, '$tecnico', 'Reabrió el ticket $ticket', '$unix_time')";
+        if($do = mysqli_query($link, $sql))
+        {
+            header('location: ok.php?o=2');
+        }
+    }
 }
 ?>
 
@@ -67,13 +78,26 @@ if(isset($_POST['cerrar']))
                 
                 <div class="container-fluid">
                     <form action="" method="POST">
-                    <button href="#" class="btn btn-success btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-check"></i>
-                        </span>
-                        <input type="hidden" name="cerrar" value="1">
-                        <span class="text">Marcar como arreglado</span>
-                    </button>
+                    
+                        <?
+                        if($info_ticket['estado'] != 'cerrado')
+                        {
+                            echo('<button href="#" class="btn btn-success btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span><input type="hidden" name="cerrar" value="1">
+                            <span class="text">Marcar como arreglado</span>
+                            </button>');
+                        }else
+                        {
+                            echo('<button href="#" class="btn btn-warning btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-tools"></i>
+                            </span><input type="hidden" name="abrir" value="1">
+                            <span class="text">Abrir incidencia de nuevo</span>
+                            </button>');
+                        }
+                        ?>
                     </form>
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     </div>

@@ -1,7 +1,8 @@
 <?
 $errores=array(
     'Se ha creado el usuario de el técnico correctamente.',
-    'Se ha cerrado el ticket correctamente'
+    'Se ha cerrado el ticket correctamente',
+    'Se ha reabierto el ticket correctmente'
 );
 if(!isset($_GET['o']))
 {

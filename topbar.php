@@ -154,9 +154,9 @@ $user_id = $_SESSION["user_id"];
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                     Settings
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="actividad.php">
                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
+                    Actividad
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="logout.php" >
