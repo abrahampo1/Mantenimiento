@@ -16,6 +16,23 @@ $tecnico = $info_ticket['tecnico'];
 $sql = "SELECT * FROM tecnicos WHERE id=$tecnico";
 $do = mysqli_query($link, $sql);
 $info_tecnico = mysqli_fetch_assoc($do);
+
+
+if(isset($_POST['cerrar']))
+{
+    $sql = "UPDATE `ticket` SET `estado` = 'cerrado' WHERE `ticket`.`id` = $ticket";
+    if($do = mysqli_query($link, $sql))
+    {
+        $unix_time = time();
+        $sql = "INSERT INTO `actividad` (`id`, `persona`, `accion`, `fecha`) VALUES (NULL, '$tecnico', 'Cerro el ticket $ticket', '$unix_time')";
+        if($do = mysqli_query($link, $sql))
+        {
+            header('location: ok.php?o=1');
+        }
+    }
+    
+    
+}
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +71,7 @@ $info_tecnico = mysqli_fetch_assoc($do);
                         <span class="icon text-white-50">
                             <i class="fas fa-check"></i>
                         </span>
+                        <input type="hidden" name="cerrar" value="1">
                         <span class="text">Marcar como arreglado</span>
                     </button>
                     </form>

@@ -409,7 +409,7 @@ if(isset($_POST["nombre"]))
                     <!-- Pending error tickets calculator -->
                     <h2>Tickets de mantenimiento</h2>
                     <?
-                    $sql = "SELECT * FROM ticket WHERE aparato=$aparato";
+                    $sql = "SELECT * FROM ticket WHERE aparato=$aparato AND estado = 'pendiente'";
                     $do = buscarbdo($sql);
                     $tickets = 0;
                     while($row = mysqli_fetch_assoc($do))
@@ -436,7 +436,7 @@ if(isset($_POST["nombre"]))
                             <div class="row">
                             <?
                             $aparato = $_GET['a'];
-                        $sql = "SELECT * FROM ticket WHERE aparato=$aparato";
+                        $sql = "SELECT * FROM ticket WHERE aparato=$aparato AND estado = 'pendiente'";
                         $do = buscarbdo($sql);
                         while($row = mysqli_fetch_assoc($do))
                         {

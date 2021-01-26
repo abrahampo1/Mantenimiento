@@ -51,7 +51,7 @@ $user_id = $_SESSION["user_id"];
                 <?
                 //Sistema de tickets
 
-                    $sql = "SELECT * FROM ticket WHERE tecnico = $user_id";
+                    $sql = "SELECT * FROM ticket WHERE tecnico = $user_id AND estado = 'pendiente'";
                     $conteo_tickets = 0;
                     if($ticket_bd = mysqli_query($link, $sql))
                     {
